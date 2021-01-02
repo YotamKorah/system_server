@@ -7,3 +7,5 @@
 **routing** by nginx
 
 **database** in mongodb
+
+[test server](http://menahem.westeurope.cloudapp.azure.com)
