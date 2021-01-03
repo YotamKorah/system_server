@@ -15,9 +15,10 @@ DB = client['menahem']
 
 @app.route('/<page>')
 def test(page):
-    data = list(DB.get_collection(page).find({}, {'_id': False}))
-    if not data:
+    collection = DB.get_collection(page)
+    if not collection:
         abort(404)
+    data = list(collection.find({}, {'_id': False}))
     return jsonify({'time': datetime.datetime.now().strftime('%H:%M:%S'), 'data': data})
 
 

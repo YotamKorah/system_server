@@ -23,5 +23,5 @@ def monitoring():
 if __name__ == '__main__':
     multiprocessing.Process(target=react).start()
     multiprocessing.Process(target=flask).start()
-    #multiprocessing.Process(target=monitoring).start()
+    multiprocessing.Process(target=monitoring).start()
 
