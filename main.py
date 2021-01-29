@@ -7,7 +7,7 @@ import multiprocessing
 
 def react():
     os.chdir(os.path.join(os.getcwd(), 'frontend'))
-    os.system('npm start')
+    os.system('serve -s build')
     
 
 def flask():

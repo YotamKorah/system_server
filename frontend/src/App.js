@@ -1,99 +1,20 @@
-import './App.css';
-import React from 'react';
-
-
-function ListItems(props) {
-  let items = props.data;
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Navigation, Footer, Home, About, Contact } from "./components";
+function App() {
   return (
-    <ul>
-      {items.map(item => (
-        <li key={item.title}>{item.title} - {item.text}</li>
-      ))}
-    </ul>
+    <div className="App">
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route path="/" exact component={() => <Home />} />
+          <Route path="/about" exact component={() => <About />} />
+          <Route path="/contact" exact component={() => <Contact />} />
+        </Switch>
+        <Footer />
+      </Router>
+    </div>
   );
-}
-
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: null,
-      time: null,
-    };
-    //this.apiUrl = "http://yt-win.westeurope.cloudapp.azure.com:8000/api/items"
-    this.apiUrl = "/api/test"
-    //this.apiUrl = "http://10.0.4.42:8000/api/items"
-  }
-
-  componentDidMount() {
-    fetch(this.apiUrl)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result.data,
-            time: result.time,
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-    this.interval = setInterval(() => {
-      fetch(this.apiUrl)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result.data,
-            time: result.time,
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )},
-    1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  render() {
-    const { error, isLoaded, items, time } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="App">
-          <header className="App-header">
-            <h1>The time is: {time}</h1>
-            <ListItems data={items}/>
-          </header>
-        </div>
-      )
-    };
-  }
 }
 
 export default App;
